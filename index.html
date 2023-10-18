@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Mailer v0.1.0</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 pt-10">
+    <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg content-center">
+        <div class="flex justify-center items-center">
+            <img src="https://upload.wikimedia.org/wikipedia/en/3/3d/Wellington_College_crest.png" class="mb-4 w-20 align-items">
+        </div>
+        <h1 class="text-2xl font-semibold mb-4 mt-2">Music Mailer v0.1.0</h1>
+        <form action="#">
+            <div class="mb-4">
+                <label for="studentName" class="block text-gray-600">Your Name</label>
+                <input type="text" id="studentName" name="studentName" required class="w-full p-2 border rounded">
+            </div>
+            <div class="mb-4">
+                <label for="teacherName" class="block text-gray-600">Teacher's Name</label>
+                <input type="text" id="teacherName" name="teacherName" required class="w-full p-2 border rounded">
+            </div>
+            <div class="mb-4">
+                <label for="teacherInitials" class="block text-gray-600">Teacher's Initials</label>
+                <input type="text" id="teacherInitials" name="teacherInitials" required class="w-full p-2 border rounded">
+            </div>
+            <div class="mb-4">
+                <label for="selectedDay" class="block text-gray-600">Select a Day</label>
+                <select id="selectedDay" name="selectedDay" required class="w-full p-2 border rounded">
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="selectedTime" class="block text-gray-600">Select a Time</label>
+                <select id="selectedTime" name="selectedTime" required class="w-full p-2 border rounded">
+                    <option value="first 20 minutes">First 20 minutes</option>
+                    <option value="last 20 minutes">Last 20 minutes</option>
+                    <option value="first 40 minutes">First 40 minutes</option>
+                    <option value="last 40 minutes">Last 40 minutes</option>
+                </select>
+            </div>
+            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" type="submit">
+                Generate Email
+            </button>
+            <p class="block text-gray-600 pt-3"><a href="mailto:wilkinl@wellingtoncollege.org.uk">Need Help?</a></p>
+            <p class="block text-gray-600 pt-3">Design by AGR | Code by LKW</p>
+        </form>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form");
+    
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+    
+                const studentName = document.querySelector("#studentName").value;
+                const teacherName = document.querySelector("#teacherName").value;
+                const teacherInitials = document.querySelector("#teacherInitials").value;
+                const selectedDay = document.querySelector("#selectedDay").value;
+                const selectedTime = document.querySelector("#selectedTime").value;
+    
+                const mailtoLink = `mailto:${teacherInitials}@wellingtoncollege.org.uk?subject=Music%20Lesson%20-%20${selectedDay}&body=Dear%20${teacherName},%0D%0A%0D%0APlease%20could%20I%20miss%20the%20${selectedTime}%20of%20our%20lesson%20on%20${selectedDay}.%0D%0A%0D%0ABest%20Wishes,%0D%0A${studentName}`;
+    
+                window.location.href = mailtoLink;
+            });
+        });
+    </script>
+    
+</body>
+</html>
