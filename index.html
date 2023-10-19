@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Mailer v0.1.0</title>
+    <title>MusicMailer v0.2.0</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 pt-10">
@@ -11,19 +11,20 @@
         <div class="flex justify-center items-center">
             <img src="https://upload.wikimedia.org/wikipedia/en/3/3d/Wellington_College_crest.png" class="mb-4 w-20 align-items">
         </div>
-        <h1 class="text-2xl font-semibold mb-4 mt-2">Music Mailer v0.1.0</h1>
+        <h1 class="text-2xl font-semibold mb-4 mt-2">MusicMailer v0.2.0</h1>
         <form action="#">
             <div class="mb-4">
                 <label for="studentName" class="block text-gray-600">Your Name</label>
-                <input placeholder="Your First Name" type="text" id="studentName" name="studentName" required class="w-full p-2 border rounded">
+                <input placeholder="Start typing your name" id="studentName" name="studentName" required class="w-full p-2 border rounded">
             </div>
             <div class="mb-4">
                 <label for="teacherName" class="block text-gray-600">Teacher's Name</label>
-                <input placeholder="Mr Wells" type="text" id="teacherName" name="teacherName" required class="w-full p-2 border rounded">
+                <input type="text" placeholder="Mr Wells" id="teacherName" name="teacherName" required class="w-full p-2 border rounded">
             </div>
-            <div class="mb-4">
-                <label for="teacherInitials" class="block text-gray-600">Teacher's Initials</label>
-                <input placeholder="GXW" type="text" id="teacherInitials" name="teacherInitials" required class="w-full p-2 border rounded">
+            <div class="mb-4" onclick="event.stopImmediatePropagation();">
+                <label for="autocompleteInput" class="block text-gray-600">Teacher's Email</label>
+                <input id="autocompleteInput" type="email" required class="w-full p-2 border rounded" onkeyup="onkeyUp(event)" placeholder="Start typing your teachers' name"/>
+                <div id="dropdown" class="w-60 h-20 border border rounded-md bg-white absolute overflow-y-auto hidden"></div>
             </div>
             <div class="mb-4">
                 <label for="selectedDay" class="block text-gray-600">Select a Day</label>
@@ -61,16 +62,295 @@
     
                 const studentName = document.querySelector("#studentName").value;
                 const teacherName = document.querySelector("#teacherName").value;
-                const teacherInitials = document.querySelector("#teacherInitials").value;
+                const teacherEmail = document.querySelector("#autocompleteInput").value;
                 const selectedDay = document.querySelector("#selectedDay").value;
                 const selectedTime = document.querySelector("#selectedTime").value;
     
-                const mailtoLink = `mailto:${teacherInitials}@wellingtoncollege.org.uk?subject=Music%20Lesson%20-%20${selectedDay}&body=Dear%20${teacherName},%0D%0A%0D%0APlease%20could%20I%20miss%20the%20${selectedTime}%20of%20our%20lesson%20on%20${selectedDay}.%0D%0A%0D%0ABest%20Wishes,%0D%0A${studentName}`;
+                const mailtoLink = `mailto:${teacherEmail}?subject=Music%20Lesson%20-%20${selectedDay}&body=Dear%20${teacherName},%0D%0A%0D%0APlease%20could%20I%20miss%20the%20${selectedTime}%20of%20our%20lesson%20on%20${selectedDay}.%0D%0A%0D%0ABest%20Wishes,%0D%0A${studentName}`;
     
                 window.location.href = mailtoLink;
             });
         });
     </script>
-    
+    <script>
+        let teachers = [
+            {"name":"Teacher, Thomas", "email":"TT@wellingtoncollege.org.uk"},
+            {"name":"Vennard, Owen", "email":"OLV@wellingtoncollege.org.uk"},
+            {"name":"Taylor, Viv","email":"VCT@wellingtoncollege.org.uk"},
+            {"name":"Mitten, Sam","email":"SAXM@wellingtoncollege.org.uk"},
+            {"name":"Crouch, Stephen","email":"SJXC@wellingtoncollege.org.uk"},
+            {"name":"Thompson, Lisa","email":"LJT@wellingtoncollege.org.uk"},
+            {"name":"Henderson, Cressida","email":"CJEH@wellingtoncollege.org.uk"},
+            {"name":"Chatterton, Emma","email":"ELC@wellingtoncollege.org.uk"},
+            {"name":"Ford, Dinah","email":"DF@wellingtoncollege.org.uk"},
+            {"name":"Self, Jacqui","email":"JSelf@wellingtoncollege.org.uk"},
+            {"name":"Baker, Katherine","email":"KEJB@wellingtoncollege.org.uk"},
+            {"name":"Boddon, Yvonne","email":"yab@wellingtoncollege.org.uk"},
+            {"name":"MacDonald, Emma","email":"EMM@wellingtoncollege.org.uk"},
+            {"name":"Pearson, Valerie","email":"VAP@wellingtoncollege.org.uk"},
+            {"name":"Willis-Phillips, Catherine","email":"CAWP@wellingtoncollege.org.uk"},
+            {"name":"Wells, George","email":"GXW@wellingtoncollege.org.uk"},
+            {"name":"Mead, Caroline","email":"CMead@wellingtoncollege.org.uk"},
+            {"name":"Romero, Ana","email":"AXR@wellingtoncollege.org.uk"},
+            {"name":"Dahl, James","email":"JELD@wellingtoncollege.org.uk"},
+            {"name":"Allcock, Simon","email":"SXA@wellingtoncollege.org.uk"},
+            {"name":"Reed, Angela","email":"ar@wellingtoncollege.org.uk"},
+            {"name":"Wayman, Jo","email":"JCW@wellingtoncollege.org.uk"},
+            {"name":"Hodge, Nicole","email":"NJH@wellingtoncollege.org.uk"},
+            {"name":"Heathcote, William","email":"WHH@wellingtoncollege.org.uk"},
+            {"name":"Burt, Sally","email":"saxb@wellingtoncollege.org.uk"},
+            {"name":"Varcoe, Dee","email":"DV@wellingtoncollege.org.uk"},
+            {"name":"Bailey, Anthony","email":"AB@wellingtoncollege.org.uk"},
+            {"name":"Heeley, Jonathan","email":"JOH@wellingtoncollege.org.uk"},
+            {"name":"Henwood, Susie","email":"SJH@wellingtoncollege.org.uk"},
+            {"name":"Burrage, Nick","email":"NRB@wellingtoncollege.org.uk"},
+            {"name":"Farrell, Sean","email":"SAF@wellingtoncollege.org.uk"},
+            {"name":"Williamson, Simon","email":"SRJW@wellingtoncollege.org.uk"},
+            {"name":"Parker, Sue","email":"SXP@wellingtoncollege.org.uk"},
+            {"name":"Birkin, Hilary","email":"HAB@wellingtoncollege.org.uk"},
+            {"name":"Gutteridge, Sam","email":"SCDG@wellingtoncollege.org.uk"},
+            {"name":"Gowland, Lindsay","email":"LGowland@wellingtoncollege.org.uk"},
+            {"name":"Woolhouse, Tarla","email":"TW@wellingtoncollege.org.uk"},
+            {"name":"Jennings, Paul","email":"pjj@wellingtoncollege.org.uk"},
+            {"name":"Varey, Ilona","email":"IVarey@wellingtoncollege.org.uk"},
+            {"name":"Yarnton, Sally","email":"SEY@wellingtoncollege.org.uk"},
+            {"name":"Henderson, Iain","email":"IMH@wellingtoncollege.org.uk"},
+            {"name":"Wilson, David","email":"DW@wellingtoncollege.org.uk"},
+            {"name":"Lynch, Delyth","email":"DAL@wellingtoncollege.org.uk"},
+            {"name":"Knights, Sam","email":"SKnights@wellingtoncollege.org.uk"},
+            {"name":"Farrington, Robert","email":"RFarrington@wellingtoncollege.org.uk"},
+            {"name":"Candappa, Sophia","email":"SLFC@wellingtoncollege.org.uk"},
+            {"name":"Pratt, Kate","email":"KXP@wellingtoncollege.org.uk"},
+            {"name":"Pratt, Dan","email":"DMP@wellingtoncollege.org.uk"},
+            {"name":"O'Loughlin, Julian","email":"JMAO@wellingtoncollege.org.uk"},
+            {"name":"Short, Zoe","email":"ZS@wellingtoncollege.org.uk"},
+            {"name":"Ewart, Christopher","email":"CBE@wellingtoncollege.org.uk"},
+            {"name":"Venables, Edward","email":"EBRV@wellingtoncollege.org.uk"},
+            {"name":"Cromarty, Robert","email":"RC@wellingtoncollege.org.uk"},
+            {"name":"Potter, Chris","email":"CMSTGP@wellingtoncollege.org.uk"},
+
+            {"name":"Rawlinson, John","email":"JCR@wellingtoncollege.org.uk"},
+
+            {"name":"Peate, Louise","email":"LP@wellingtoncollege.org.uk"},
+
+            {"name":"MacKenzie, Sarah","email":"SMLM@wellingtoncollege.org.uk"},
+
+            {"name":"Christodoulou, Alexis","email":"acc@wellingtoncollege.org.uk"},
+
+            {"name":"Gutteridge, Polly","email":"PPG@wellingtoncollege.org.uk"},
+
+            {"name":"Tayler, Rachael","email":"RET@wellingtoncollege.org.uk"},
+
+            {"name":"Tapley, James","email":"jrst@wellingtoncollege.org.uk"},
+
+            {"name":"Hooker, Caroline","email":"CHooker@wellingtoncollege.org.uk"},
+
+            {"name":"Symeonidis, Kerry","email":"KDS@wellingtoncollege.org.uk"},
+
+            {"name":"Knight, Kelly","email":"KKnight@wellingtoncollege.org.uk"},
+
+            {"name":"Knight, Melissa","email":"MXK@wellingtoncollege.org.uk"},
+
+            {"name":"Miller, Sarah","email":"SMiller@wellingtoncollege.org.uk"},
+
+            {"name":"Williams, Vicky","email":"VWilliams@wellingtoncollege.org.uk"},
+
+            {"name":"Whittington, Tracy","email":"TWhittington@wellingtoncollege.org.uk"},
+
+            {"name":"Ramkrishna, Niki","email":"NR@wellingtoncollege.org.uk"},
+
+            {"name":"Charles, Susan","email":"SCharles@wellingtoncollege.org.uk"},
+
+            {"name":"Dray, David","email":"DDray@wellingtoncollege.org.uk"},
+
+            {"name":"Price, Cindy","email":"CP@wellingtoncollege.org.uk"},
+
+            {"name":"Horlock, Debra","email":"DWH@wellingtoncollege.org.uk"},
+
+            {"name":"Park, Rebecca","email":"RXP@wellingtoncollege.org.uk"},
+
+            {"name":"Halliday-Vargas, Jenny","email":"JHV@wellingtoncollege.org.uk"},
+
+            {"name":"Hart, Clive","email":"chart@wellingtoncollege.org.uk"},
+
+            {"name":"Scholefield, Vicki","email":"vscholefield@wellingtoncollege.org.uk"},
+
+            {"name":"Cannon, Brian","email":"BJC@wellingtoncollege.org.uk"},
+
+            {"name":"Waller, Simon","email":"SW@wellingtoncollege.org.uk"},
+
+            {"name":"Farrell, Ellie","email":"ERF@wellingtoncollege.org.uk"},
+
+            {"name":"Denne, Gill","email":"GD@wellingtoncollege.org.uk"},
+
+            {"name":"Solano-Martinez, Carla","email":"CSM@wellingtoncollege.org.uk"},
+
+            {"name":"Hathaway, Debbie","email":"DAH@wellingtoncollege.org.uk"},
+
+            {"name":"Heslop, Al","email":"AHeslop@wellingtoncollege.org.uk"},
+            {"name":"Lindo, Murray","email":"MSL@wellingtoncollege.org.uk"},
+            {"name":"Wai, Edwin","email":"EW@wellingtoncollege.org.uk"},
+            {"name":"Babalola, Ruth","email":"REB@wellingtoncollege.org.uk"},
+            {"name":"O'Donnell, Inma","email":"IMON@wellingtoncollege.org.uk"},
+            {"name":"Clarke, Kevin","email":"KC@wellingtoncollege.org.uk"},
+            {"name":"Barat, Katel","email":"KAB@wellingtoncollege.org.uk"},
+            {"name":"Kirkham, Rachelle","email":"RSK@wellingtoncollege.org.uk"},
+            {"name":"Atherton, Lucy","email":"LHA@wellingtoncollege.org.uk"},
+            {"name":"Tulley, Ryan","email":"RST@wellingtoncollege.org.uk"},
+            {"name":"Pyke, Janette","email":"JEP@wellingtoncollege.org.uk"},
+            {"name":"Vincendeau, Goulwenn","email":"GV@wellingtoncollege.org.uk"},
+            {"name":"Hulbert, Edward","email":"EJH@wellingtoncollege.org.uk"},
+            {"name":"Edmunds, Freddie","email":"FJE@wellingtoncollege.org.uk"},
+            {"name":"Thomas, Emily","email":"EJVT@wellingtoncollege.org.uk"},
+            {"name":"Sagers, Flora","email":"FHHS@wellingtoncollege.org.uk"},
+            {"name":"Lawes, Solomon","email":"SOL@wellingtoncollege.org.uk"},
+            {"name":"Bilclough, George","email":"GFB@wellingtoncollege.org.uk"},
+            {"name":"Jaoui, Yasmine","email":"YSJ@wellingtoncollege.org.uk"},
+            {"name":"Edmunds, Astrid","email":"AGE@wellingtoncollege.org.uk"},
+            {"name":"Benjamin, Gareth","email":"GAB@wellingtoncollege.org.uk"},
+            {"name":"Dunne, Paul","email":"PCAD@wellingtoncollege.org.uk"},
+            {"name":"Adams, Antony","email":"AJPA@wellingtoncollege.org.uk"},
+            {"name":"Stark-Ordish, Adrian","email":"ASO@wellingtoncollege.org.uk"},
+            {"name":"O'Neill, Nathan","email":"NGO@wellingtoncollege.org.uk"},
+            {"name":"Cootes, Paul","email":"PTC@wellingtoncollege.org.uk"},
+            {"name":"Greenwood, Will","email":"wjhg@wellingtoncollege.org.uk"},
+            {"name":"Christodoulou, Tamara","email":"tc@wellingtoncollege.org.uk"},
+            {"name":"Kirby, Tom","email":"TCK@wellingtoncollege.org.uk"},
+            {"name":"Macleod, Tristan","email":"TRM@wellingtoncollege.org.uk"},
+            {"name":"Baldwin, Kathy","email":"KKB@wellingtoncollege.org.uk"},
+            {"name":"Howe, Alex","email":"AMH@wellingtoncollege.org.uk"},
+            {"name":"Campion, Amanda","email":"AJEC@wellingtoncollege.org.uk"},
+            {"name":"Rothwell, Tim","email":"tajr@wellingtoncollege.org.uk"},
+            {"name":"Goves, Jessica","email":"JCG@wellingtoncollege.org.uk"},
+            {"name":"Taylor, Alice","email":"AST@wellingtoncollege.org.uk"},
+            {"name":"Dalton, Sarah","email":"SLXD@wellingtoncollege.org.uk"},
+            {"name":"Oliphant-Callum, Charles","email":"CMOC@wellingtoncollege.org.uk"},
+            {"name":"Carrington, John","email":"JEXC@wellingtoncollege.org.uk"},
+            {"name":"Ma, NingNing","email":"NNM@wellingtoncollege.org.uk"},
+            {"name":"Smith, Colin","email":"CSmith@wellingtoncollege.org.uk"},
+            {"name":"Webber, Joshua","email":"JMW@wellingtoncollege.org.uk"},
+            {"name":"Oliver, Erynn","email":"eo@wellingtoncollege.org.uk"},
+            {"name":"Kenworthy, Caroline","email":"CEK@wellingtoncollege.org.uk"},
+            {"name":"Davison, Chris","email":"CXD@wellingtoncollege.org.uk"},
+            {"name":"Coates, Anthony","email":"AGC@wellingtoncollege.org.uk"},
+            {"name":"Carpenter, Alice","email":"AEXC@wellingtoncollege.org.uk"},
+            {"name":"Granville-Chapman, Katy","email":"KEGC@wellingtoncollege.org.uk"},
+            {"name":"Poynter, Emma","email":"EPP@wellingtoncollege.org.uk"},
+            {"name":"Atherton, Richard","email":"RHA@wellingtoncollege.org.uk"},
+            {"name":"Hutchinson, Christelle","email":"CAH@wellingtoncollege.org.uk"},
+            {"name":"Gutulan, Estella","email":"EG@wellingtoncollege.org.uk"},
+            {"name":"Wardlaw, Archie","email":"ATLPW@wellingtoncollege.org.uk"},
+            {"name":"Flanagan, Amy","email":"AHF@wellingtoncollege.org.uk"},
+            {"name":"Cole, Chelsey","email":"CLC@wellingtoncollege.org.uk"},
+            {"name":"Tang, Yunyun","email":"YYT@wellingtoncollege.org.uk"},
+            {"name":"Ramsey, Emma","email":"EKR@wellingtoncollege.org.uk"},
+            {"name":"Johncock, Matthew","email":"MSPJ@wellingtoncollege.org.uk"},
+            {"name":"Jobson, Sophie","email":"SYNJ@wellingtoncollege.org.uk"},
+            {"name":"Wallis, Sara","email":"SPW@wellingtoncollege.org.uk"},
+            {"name":"Wright, Harry","email":"HWYW@wellingtoncollege.org.uk"},
+            {"name":"Johnston, Katie","email":"KJ@wellingtoncollege.org.uk"},
+            {"name":"Opie, Kam","email":"kko@wellingtoncollege.org.uk"},
+            {"name":"Aktas, Sandra","email":"SMCA@wellingtoncollege.org.uk"},
+            {"name":"Patterson, Abigail","email":"AMP@wellingtoncollege.org.uk"},
+            {"name":"Gomez, Aurora","email":"AG@wellingtoncollege.org.uk"},
+            {"name":"Simkin, Stephen","email":"SPS@wellingtoncollege.org.uk"},
+            {"name":"Gray, Helen","email":"HLG@wellingtoncollege.org.uk"},
+            {"name":"Kirkham, Simon","email":"SJK@wellingtoncollege.org.uk"},
+            {"name":"Wilson, Sam","email":"SAEW@wellingtoncollege.org.uk"},
+            {"name":"Morris, Ian","email":"IRM@wellingtoncollege.org.uk"},
+            {"name":"Craig, John","email":"JEC@wellingtoncollege.org.uk"},
+            {"name":"Laing, Sam","email":"SRL@wellingtoncollege.org.uk"},
+            {"name":"Whitelaw, Chloe","email":"CW@wellingtoncollege.org.uk"},
+            {"name":"Head, Tim","email":"TJH@wellingtoncollege.org.uk"},
+            {"name":"Yuan, Mike","email":"MXY@wellingtoncollege.org.uk"},
+            {"name":"Bidston, Emmie","email":"EJB@wellingtoncollege.org.uk"},
+            {"name":"Duff, Sandrine","email":"sxd@wellingtoncollege.org.uk"},
+            {"name":"Sayed, Qasim Hasan","email":"qhs@wellingtoncollege.org.uk"},
+            {"name":"Joy, Philip","email":"pgpj@wellingtoncollege.org.uk"},
+            {"name":"Ellwood, Mark","email":"MJDE@wellingtoncollege.org.uk"},
+            {"name":"Whitworth, John","email":"jrw@wellingtoncollege.org.uk"},
+            {"name":"Bateson, Tanya","email":"TB@wellingtoncollege.org.uk"},
+            {"name":"Hicks, Adam","email":"adh@wellingtoncollege.org.uk"},
+            {"name":"Winders, Eleanor","email":"EFW@wellingtoncollege.org.uk"},
+            {"name":"Clarke, Dushy","email":"DXC@wellingtoncollege.org.uk"},
+            {"name":"Nickisson-Richards, Jonathan","email":"JPNR@wellingtoncollege.org.uk"},
+            {"name":"Roundell, Simon","email":"SFR@wellingtoncollege.org.uk"},
+            {"name":"Grillo, Jane","email":"JXG@wellingtoncollege.org.uk"},
+            {"name":"Lexton, Ruth","email":"RSL@wellingtoncollege.org.uk"},
+            {"name":"Cooke, Clare","email":"cgc@wellingtoncollege.org.uk"},
+            {"name":"Dewes, Jim","email":"ARD@wellingtoncollege.org.uk"},
+            {"name":"Brown, Adele","email":"AEB@wellingtoncollege.org.uk"},
+            {"name":"Cawdron, Mike","email":"MJC@wellingtoncollege.org.uk"},
+            {"name":"McDonald, Kyle","email":"JKRM@wellingtoncollege.org.uk"},
+            {"name":"Murray, Jack","email":"JDM@wellingtoncollege.org.uk"},
+            {"name":"Evans, Caroline","email":"CDE@wellingtoncollege.org.uk"},
+            {"name":"Lewsley, Ben","email":"BPL@wellingtoncollege.org.uk"},
+            {"name":"White, Jonathan","email":"jsw@wellingtoncollege.org.uk"},
+            {"name":"Owen, Sam","email":"SASO@wellingtoncollege.org.uk"},
+            {"name":"Patterson, Miranda","email":"mcp@wellingtoncollege.org.uk"},
+            {"name":"Sutton, Charlie","email":"CMS@wellingtoncollege.org.uk"},
+            {"name":"Wayman, Tom","email":"TFW@wellingtoncollege.org.uk"},
+            {"name":"Mann, Phil","email":"PRM@wellingtoncollege.org.uk"},
+            {"name":"Carr, Gareth","email":"GDC@wellingtoncollege.org.uk"},
+            {"name":"Loaring, Rachel","email":"REL@wellingtoncollege.org.uk"},
+            {"name":"Anderson, Claire","email":"CA@wellingtoncollege.org.uk"},
+            {"name":"Basra, Narinder","email":"NSB@wellingtoncollege.org.uk"},
+            {"name":"Barraclough, Stephen","email":"SRB@wellingtoncollege.org.uk"},
+            {"name":"Biggs, Justin","email":"JCB@wellingtoncollege.org.uk"},
+            {"name":"Lawrence, Jessica","email":"JL@wellingtoncollege.org.uk"},
+            {"name":"Winter, Robert","email":"RWW@wellingtoncollege.org.uk"},
+            {"name":"Coles, Tracey","email":"TColes@wellingtoncollege.org.uk"},
+            {"name":"Piper, Ria","email":"RPiper@wellingtoncollege.org.uk"},
+            {"name":"Cantwell, Brooke","email":"BAC@wellingtoncollege.org.uk"},
+            {"name":"Rea, David","email":"DR@wellingtoncollege.org.uk"},
+            {"name":"O'Brien, Will","email":"WAO@wellingtoncollege.org.uk"}
+        ];
+        function onkeyUp(e) {
+          let keyword = e.target.value;
+          let dropdownEl = document.querySelector("#dropdown");
+          dropdownEl.classList.remove("hidden");
+          let filteredTeachers = teachers.filter((c) =>
+            c.name.toLowerCase().includes(keyword.toLowerCase())
+          );
+  
+          renderOptions(filteredTeachers);
+        }
+  
+        document.addEventListener("DOMContentLoaded", () => {
+          renderOptions(teachers);
+        });
+  
+        function renderOptions(options) {
+          let dropdownEl = document.querySelector("#dropdown");
+  
+          let newHtml = ``;
+  
+          options.forEach((teachers) => {
+            newHtml += `<div
+              onclick="selectOption('${teachers.email}')"
+              class="px-5 py-3 border-b border-gray-200 text-stone-600 cursor-pointer hover:bg-slate-100 transition-colors"
+            >
+              ${teachers.name}
+            </div>`;
+          });
+  
+          dropdownEl.innerHTML = newHtml;
+        }
+  
+        function selectOption(selectedOption) {
+          hideDropdown();
+          let input = document.querySelector("#autocompleteInput");
+          input.value = selectedOption;
+        }
+  
+        document.addEventListener("click", () => {
+          hideDropdown();
+        });
+  
+        function hideDropdown() {
+          let dropdownEl = document.querySelector("#dropdown");
+          dropdownEl.classList.add("hidden");
+        }
+      </script>
 </body>
 </html>

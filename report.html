@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicMailer v0.2.0</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 pt-10">
+    <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg content-center">
+        <div class="flex justify-center items-center">
+            <img src="https://upload.wikimedia.org/wikipedia/en/3/3d/Wellington_College_crest.png" class="mb-4 w-20 align-items">
+        </div>
+        <h1 class="text-2xl font-semibold mb-4 mt-2">MusicMailer v0.2.0</h1>
+        <form action="#">
+            <div class="mb-4">
+                <label for="studentName" class="block text-gray-600">Your Name</label>
+                <input placeholder="Start typing your name" id="studentName" name="studentName" required class="w-full p-2 border rounded">
+            </div>
+            <div class="mb-4">
+                <label for="teacherName" class="block text-gray-600">Teacher's Name</label>
+                <input type="email" placeholder="Mr Wells" id="teacherName" name="teacherName" required class="w-full p-2 border rounded">
+            </div>
+            <div class="mb-4" onclick="event.stopImmediatePropagation();">
+                <label for="autocompleteInput" class="block text-gray-600">Teacher's Email</label>
+                <input id="autocompleteInput" class="w-full p-2 border rounded" onkeyup="onkeyUp(event)" placeholder="Start typing your teachers' name."/>
+                <div id="dropdown" class="w-60 h-35 p-2 border border rounded-md bg-white absolute overflow-y-auto hidden"></div>
+            </div>
+            <div class="mb-4">
+                <label for="selectedDay" class="block text-gray-600">Reason</label>
+                <select id="selectedDay" name="selectedDay" required class="w-full p-2 border rounded">
+                    <option name="missing teacher" value="missing teacher">Missing Teacher </option>
+                    <option value="email not sending">Email Not Sending</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="selectedTime" class="block text-gray-600">Select a Time</label>
+                <select id="selectedTime" name="selectedTime" required class="w-full p-2 border rounded">
+                    <option value="first 20 minutes">First 20 minutes</option>
+                    <option value="last 20 minutes">Last 20 minutes</option>
+                    <option value="first 40 minutes">First 40 minutes</option>
+                    <option value="last 40 minutes">Last 40 minutes</option>
+                </select>
+            </div>
+            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" type="submit">
+                Submit Report
+            </button>
+            <p class="block text-gray-600 pt-3"><a href="mailto:wilkinl@wellingtoncollege.org.uk">Need Help?</a></p>
+            <p class="block text-gray-600 pt-3">Design by AGR | Code by LKW</p>
+        </form>
+    </div>
+</body>
+</html>
