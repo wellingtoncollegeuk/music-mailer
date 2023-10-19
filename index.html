@@ -25,7 +25,7 @@
             </div>
             <div class="mb-4" onclick="event.stopImmediatePropagation();">
                 <label for="autocompleteInput" class="block text-gray-600">Teacher's Email</label>
-                <input id="autocompleteInput" type="email" required class="w-full p-2 border rounded" onkeyup="onkeyUp(event)" placeholder="Start typing your teachers' name"/>
+                <input autocomplete="off" id="autocompleteInput" type="email" required class="w-full p-2 border rounded" onkeyup="onkeyUp(event)" placeholder="Start typing your teachers' name"/>
                 <div id="dropdown" class="w-60 h-20 border border rounded-md bg-white absolute overflow-y-auto hidden"></div>
             </div>
             <div class="mb-4">
